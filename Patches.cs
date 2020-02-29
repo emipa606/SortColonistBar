@@ -1,31 +1,27 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using RimWorld;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using Verse;
 
 namespace SortColonistBar.Patches
 {
     [StaticConstructorOnStartup]
-    internal static class HarmonyPatches
+    public class Main
     {
-        static HarmonyPatches()
+        static Main()
         {
-            HarmonyInstance harmony = HarmonyInstance.Create("rimworld.mod.SortColonistBar");
-
-            harmony.Patch(AccessTools.Method(typeof(ColonistBarColonistDrawer), nameof(ColonistBarColonistDrawer.HandleClicks)),
-                              new HarmonyMethod(typeof(HandleClicks), nameof(HandleClicks.HandleClicks_Prefix)),
-                              null);
-
-            harmony.Patch(AccessTools.Method(typeof(PlayerPawnsDisplayOrderUtility), nameof(PlayerPawnsDisplayOrderUtility.Sort)),
-                new HarmonyMethod(typeof(Sort), nameof(Sort.Sort_Prefix)),
-                new HarmonyMethod(typeof(Sort), nameof(Sort.Sort_PostFix)));
+            new Harmony("rimworld.mod.sortcolonistbar").PatchAll(Assembly.GetExecutingAssembly());
         }
     }
 
-    internal class Sort
+    [HarmonyPatch(typeof(PlayerPawnsDisplayOrderUtility))]
+    [HarmonyPatch("Sort")]
+    internal class PlayerPawnsDisplayOrderUtility_Sort_Patch
     {
+        [HarmonyPrefix]
         public static bool Sort_Prefix(ref Func<Pawn, int> ___displayOrderGetter, ref Func<Pawn, int> ___thingIDNumberGetter, ref List<Pawn> pawns)
         {
             switch (Tools.Sort)
@@ -34,7 +30,6 @@ namespace SortColonistBar.Patches
                     return false;
 
                 default:
-                    //if (!pawns.NullOrEmpty())
                     {
                         ___displayOrderGetter = Tools.DisplayOrderGetter;
                         ___thingIDNumberGetter = Tools.ThingIDNumberGetter;
@@ -45,6 +40,7 @@ namespace SortColonistBar.Patches
             return true;
         }
 
+        [HarmonyPostfix]
         public static void Sort_PostFix(ref List<Pawn> pawns)
         {
             if (!pawns.NullOrEmpty())
@@ -57,11 +53,16 @@ namespace SortColonistBar.Patches
         }
     }
 
-    internal class HandleClicks
+    [HarmonyPatch(typeof(ColonistBarColonistDrawer))]
+    [HarmonyPatch("HandleClicks")]
+    internal class ColonistBarColonistDrawer_HandleClicks_Patches
     {
         private static bool mousePressed = false;
-        public static bool HandleClicks_Prefix(Rect rect, Pawn colonist, ref int reorderableGroup)
+
+        [HarmonyPrefix]
+        public static bool Prefix(Rect rect, Pawn colonist, int reorderableGroup)
         {
+
 #if DEBUG
             if (Event.current.type != EventType.Layout
                 && Event.current.button == 0
