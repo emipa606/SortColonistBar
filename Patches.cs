@@ -1,7 +1,8 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using RimWorld;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
 
@@ -12,7 +13,7 @@ namespace SortColonistBar.Patches
     {
         static HarmonyPatches()
         {
-            HarmonyInstance harmony = HarmonyInstance.Create("rimworld.mod.SortColonistBar");
+            Harmony harmony = new Harmony("rimworld.mod.SortColonistBar");
 
             harmony.Patch(AccessTools.Method(typeof(ColonistBarColonistDrawer), nameof(ColonistBarColonistDrawer.HandleClicks)),
                               new HarmonyMethod(typeof(HandleClicks), nameof(HandleClicks.HandleClicks_Prefix)),
@@ -51,7 +52,7 @@ namespace SortColonistBar.Patches
             {
                 if (Tools.Sort == Tools.SortChoice.Name)
                 {
-                    pawns.SortBy(x => x?.LabelCap);
+                    pawns.OrderBy(x => x?.LabelCap);
                 }
             }
         }

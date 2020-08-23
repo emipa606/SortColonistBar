@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using Verse;
 
 namespace SortColonistBar.FloatMenus
 {
     public class FloatMenuLabels : FloatMenu
     {
-        public FloatMenuLabels(List<Verse.FloatMenuOption> options, string title = "") : base(options, title, false)
+        public FloatMenuLabels(List<FloatMenuOption> options, string title = "") : base(options, title, false)
         {
             givesColonistOrders = false;
             vanishIfMouseDistant = true;

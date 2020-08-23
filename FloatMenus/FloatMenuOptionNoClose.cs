@@ -4,10 +4,10 @@ using Verse;
 
 namespace SortColonistBar.FloatMenus
 {
-    public class FloatMenuOptionNoClose : Verse.FloatMenuOption
+    public class FloatMenuOptionNoClose : FloatMenuOption
     {
         public FloatMenuOptionNoClose(string label, Action action)
-        : base(label, action, MenuOptionPriority.Default, null, null, 0, null, null)
+        : base(label, action, MenuOptionPriority.Default)
         {
             if (this.action == null)
             {
@@ -24,6 +24,5 @@ namespace SortColonistBar.FloatMenus
             base.DoGUI(rect, colonistOrdering, floatMenu);
             return false; // don't close after an item is selected
         }
-
     }
 }

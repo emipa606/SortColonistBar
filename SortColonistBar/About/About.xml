@@ -5,6 +5,13 @@
 	<author>Azelion</author>
 	<supportedVersions>
 		<li>1.0</li>
+		<li>1.1</li>
+		<li>1.2</li>
 	</supportedVersions>
+  <packageId>Azelion.SortColonistBar</packageId>
+  <url>https://github.com/azelion/SortColonistBar</url>
 	<description>Easily sort your colonists.</description>
+  <loadAfter>
+    <li>UnlimitedHugs.HugsLib</li>
+  </loadAfter>
 </ModMetaData>
