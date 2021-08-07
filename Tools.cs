@@ -56,8 +56,11 @@ namespace SortColonistBar
             Crafting,
             Art,
             Health,
-            MoveSpeed,
-            MarketValue,
+            Medicine,
+            Social,
+            Intellectual,
+            Speed,
+            Value,
         }
 
         public static FloatMenuOption MakeMenuItemForLabel(SortChoice choice)
@@ -86,8 +89,7 @@ namespace SortColonistBar
                         DisplayOrderGetter = _defaultDisplayOrderGetter;
                         ThingIDNumberGetter = _defaultThingIDNumberGetter;
                         break;
-
-                    case SortChoice.MoveSpeed:
+                    case SortChoice.Speed:
                         DisplayOrderGetter = (Pawn x) => -(int)(x.GetStatValue(StatDefOf.MoveSpeed) * _oneDigitSignificant);
                         NextThingIDNumberGetter = (Pawn x) => _oneDigitSignificant - (int)(x.GetStatValue(StatDefOf.MoveSpeed) * _oneDigitSignificant);
                         break;
@@ -104,16 +106,16 @@ namespace SortColonistBar
                         NextThingIDNumberGetter = (Pawn x) => x.skills?.GetSkill(SkillDefOf.Shooting) == null || x.skills.GetSkill(SkillDefOf.Shooting).TotallyDisabled ? _noSkill : maxSkillLevel - x.skills.GetSkill(SkillDefOf.Shooting).Level;
                         break;
                     case SortChoice.Medicine:
-                        DisplayOrderGetter = (Pawn x) =>  x.skills?.GetSkill(SkillDefOf.Medicine) == null || x.skills.GetSkill(SkillDefOf.Medicine).TotallyDisabled ? _noSkill : -x.skills.GetSkill(SkillDefOf.Medicine).Level;
+                        DisplayOrderGetter = (Pawn x) => x.skills?.GetSkill(SkillDefOf.Medicine) == null || x.skills.GetSkill(SkillDefOf.Medicine).TotallyDisabled ? _noSkill : -x.skills.GetSkill(SkillDefOf.Medicine).Level;
                         NextThingIDNumberGetter = (Pawn x) => x.skills?.GetSkill(SkillDefOf.Medicine) == null || x.skills.GetSkill(SkillDefOf.Medicine).TotallyDisabled ? x.thingIDNumber : maxSkillLevel - x.skills.GetSkill(SkillDefOf.Medicine).Level;
                         break;
                     case SortChoice.Crafting:
                         DisplayOrderGetter = (Pawn x) => x.skills?.GetSkill(SkillDefOf.Crafting) == null || x.skills.GetSkill(SkillDefOf.Crafting).TotallyDisabled ? _noSkill : -x.skills.GetSkill(SkillDefOf.Crafting).Level;
-                        NextThingIDNumberGetter = (Pawn x) => x.skills.GetSkill(SkillDefOf.Crafting) == null || x.skills.GetSkill(SkillDefOf.Crafting).TotallyDisabled ? x.thingIDNumber : maxSkillLevel - x.skills.GetSkill(SkillDefOf.Crafting).Level;
+                        NextThingIDNumberGetter = (Pawn x) => x.skills?.GetSkill(SkillDefOf.Crafting) == null || x.skills.GetSkill(SkillDefOf.Crafting).TotallyDisabled ? x.thingIDNumber : maxSkillLevel - x.skills.GetSkill(SkillDefOf.Crafting).Level;
                         break;
                     case SortChoice.Construction:
                         DisplayOrderGetter = (Pawn x) => x.skills?.GetSkill(SkillDefOf.Construction) == null || x.skills.GetSkill(SkillDefOf.Construction).TotallyDisabled ? _noSkill : -x.skills.GetSkill(SkillDefOf.Construction).Level;
-                        NextThingIDNumberGetter = (Pawn x) => x.skills.GetSkill(SkillDefOf.Construction) == null ? x.thingIDNumber : maxSkillLevel - x.skills.GetSkill(SkillDefOf.Construction).Level;
+                        NextThingIDNumberGetter = (Pawn x) => x.skills?.GetSkill(SkillDefOf.Construction) == null || x.skills.GetSkill(SkillDefOf.Construction).TotallyDisabled ? x.thingIDNumber : maxSkillLevel - x.skills.GetSkill(SkillDefOf.Construction).Level;
                         break;
                     case SortChoice.Cooking:
                         DisplayOrderGetter = (Pawn x) => x.skills?.GetSkill(SkillDefOf.Cooking) == null || x.skills.GetSkill(SkillDefOf.Cooking).TotallyDisabled ? _noSkill : -x.skills.GetSkill(SkillDefOf.Cooking).Level;
@@ -124,8 +126,8 @@ namespace SortColonistBar
                         NextThingIDNumberGetter = (Pawn x) => x.skills?.GetSkill(SkillDefOf.Mining) == null || x.skills.GetSkill(SkillDefOf.Mining).TotallyDisabled ? x.thingIDNumber : maxSkillLevel - x.skills.GetSkill(SkillDefOf.Mining).Level;
                         break;
                     case SortChoice.Intellectual:
-                        DisplayOrderGetter = (Pawn x) => x.skills.GetSkill(SkillDefOf.Intellectual).TotallyDisabled ? _noSkill : -x.skills.GetSkill(SkillDefOf.Intellectual).Level;
-                        NextThingIDNumberGetter = (Pawn x) => x.skills.GetSkill(SkillDefOf.Intellectual).TotallyDisabled ? _noSkill : maxSkillLevel - x.skills.GetSkill(SkillDefOf.Intellectual).Level;
+                        DisplayOrderGetter = (Pawn x) => x.skills?.GetSkill(SkillDefOf.Intellectual) == null || x.skills.GetSkill(SkillDefOf.Intellectual).TotallyDisabled ? _noSkill : -x.skills.GetSkill(SkillDefOf.Intellectual).Level;
+                        NextThingIDNumberGetter = (Pawn x) => x.skills?.GetSkill(SkillDefOf.Intellectual) == null || x.skills.GetSkill(SkillDefOf.Intellectual).TotallyDisabled ? _noSkill : maxSkillLevel - x.skills.GetSkill(SkillDefOf.Intellectual).Level;
                         break;
                     case SortChoice.Plants:
                         DisplayOrderGetter = (Pawn x) => x.skills?.GetSkill(SkillDefOf.Plants) == null || x.skills.GetSkill(SkillDefOf.Plants).TotallyDisabled ? _noSkill : -x.skills.GetSkill(SkillDefOf.Plants).Level;
