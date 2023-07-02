@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SortColonistBar", "SortColonistBar.csproj", "{EB0E614B-6F11-4A43-9B32-7098F96EB3F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SortColonistBar", "SortColonistBar\SortColonistBar.csproj", "{EB0E614B-6F11-4A43-9B32-7098F96EB3F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
