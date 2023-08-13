@@ -13,6 +13,7 @@ public static class Tools
         Manual,
         Name,
         Reverse,
+        Age,
         Ranged,
         Melee,
         Construction,
@@ -40,6 +41,7 @@ public static class Tools
             MakeMenuItemForLabel(SortChoice.Manual),
             MakeMenuItemForLabel(SortChoice.Name),
             MakeMenuItemForLabel(SortChoice.Reverse),
+            MakeMenuItemForLabel(SortChoice.Age),
             MakeMenuItemForLabel(SortChoice.Ranged),
             MakeMenuItemForLabel(SortChoice.Melee),
             MakeMenuItemForLabel(SortChoice.Construction),
@@ -90,6 +92,12 @@ public static class Tools
                 case SortChoice.Manual:
                     DisplayOrderGetter = _defaultDisplayOrderGetter;
                     ThingIDNumberGetter = _defaultThingIDNumberGetter;
+                    break;
+                case SortChoice.Age:
+                    DisplayOrderGetter = x =>
+                        -x.ageTracker.AgeBiologicalYears;
+                    NextThingIDNumberGetter = x =>
+                        x.ageTracker.AgeBiologicalYears;
                     break;
                 case SortChoice.Speed:
                     DisplayOrderGetter = x => -(int)(x.GetStatValue(StatDefOf.MoveSpeed) * _oneDigitSignificant);

@@ -1,4 +1,7 @@
 # Changelog for SortColonistBar
 
+1.4.2 - Added sorting by age
+
+
 1.4.1 - Updated for 1.4, added a reverse-option
 
