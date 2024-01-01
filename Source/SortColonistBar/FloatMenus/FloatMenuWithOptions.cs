@@ -4,12 +4,8 @@ using Verse;
 
 namespace SortColonistBar.FloatMenus;
 
-public class FloatMenuWithOptions : FloatMenuLabels
+public class FloatMenuWithOptions(List<FloatMenuOption> options) : FloatMenuLabels(options)
 {
-    public FloatMenuWithOptions(List<FloatMenuOption> options) : base(options)
-    {
-    }
-
     public override void DoWindowContents(Rect rect)
     {
         options.ForEach(o => { o.SetSizeMode(FloatMenuSizeMode.Normal); });

@@ -1,5 +1,8 @@
 # Changelog for SortColonistBar
 
+1.4.3 - Added sorting by Food, Sleep, Recreation and Mood
+
+
 1.4.2 - Added sorting by age
 
 
