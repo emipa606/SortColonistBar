@@ -5,7 +5,7 @@
 Update of Azelions mod https://steamcommunity.com/sharedfiles/filedetails/?id=1826294989
 
 - Added a Reverse-option as it seemed useful
-- Added sort by Age
+- Added sort by Age, Food, Sleep, Recreation and Mood
 
 ![Image](https://i.imgur.com/pufA0kM.png)
 

@@ -1,5 +1,8 @@
 # Changelog for SortColonistBar
 
+1.5.0 - Mod updated for 1.5 and passed autotests
+
+
 1.4.3 - Added sorting by Food, Sleep, Recreation and Mood
 
 

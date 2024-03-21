@@ -11,8 +11,7 @@ namespace SortColonistBar.Patches;
 internal class PlayerPawnsDisplayOrderUtility_Sort_Patch
 {
     [HarmonyPrefix]
-    public static bool Sort_Prefix(ref Func<Pawn, int> ___displayOrderGetter,
-        ref Func<Pawn, int> ___thingIDNumberGetter, ref List<Pawn> pawns)
+    public static bool Sort_Prefix(ref Func<Pawn, int> ___displayOrderGetter)
     {
         switch (Tools.Sort)
         {
@@ -22,7 +21,7 @@ internal class PlayerPawnsDisplayOrderUtility_Sort_Patch
             default:
             {
                 ___displayOrderGetter = Tools.DisplayOrderGetter;
-                ___thingIDNumberGetter = Tools.ThingIDNumberGetter;
+                //___thingIDNumberGetter = Tools.ThingIDNumberGetter;
             }
                 break;
         }
