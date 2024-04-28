@@ -31,7 +31,8 @@ public static class Tools
         Recreation,
         Sleep,
         Value,
-        Mood
+        Mood,
+        Time
     }
 
     private const int _noSkill = 999999;
@@ -62,7 +63,8 @@ public static class Tools
             MakeMenuItemForLabel(SortChoice.Food),
             MakeMenuItemForLabel(SortChoice.Sleep),
             MakeMenuItemForLabel(SortChoice.Recreation),
-            MakeMenuItemForLabel(SortChoice.Mood)
+            MakeMenuItemForLabel(SortChoice.Mood),
+            MakeMenuItemForLabel(SortChoice.Time)
         ]);
 
     private static SortChoice _sort = SortChoice.Manual;
@@ -297,6 +299,12 @@ public static class Tools
                         pawn.needs?.mood?.CurLevelPercentage == null
                             ? pawn.thingIDNumber
                             : (int)((1f - pawn.needs.mood.CurLevelPercentage) * 100);
+                    break;
+                case SortChoice.Time:
+                    DisplayOrderGetter = pawn =>
+                        -(int)pawn.records.GetValue(RecordDefOf.TimeAsColonistOrColonyAnimal);
+                    NextThingIDNumberGetter = pawn =>
+                        (int)pawn.records.GetValue(RecordDefOf.TimeAsColonistOrColonyAnimal);
                     break;
                 default:
                     Log.Warning("Unimplemented sort option");
