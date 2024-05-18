@@ -1,5 +1,8 @@
 # Changelog for SortColonistBar
 
+1.5.2 - Switching to manual keeps the current sorting, added missing health sorting logic
+
+
 1.5.1 - Added time in colony sorter
 
 

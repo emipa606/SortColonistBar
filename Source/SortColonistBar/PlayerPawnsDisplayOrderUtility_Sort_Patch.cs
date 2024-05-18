@@ -6,8 +6,7 @@ using Verse;
 
 namespace SortColonistBar.Patches;
 
-[HarmonyPatch(typeof(PlayerPawnsDisplayOrderUtility))]
-[HarmonyPatch("Sort")]
+[HarmonyPatch(typeof(PlayerPawnsDisplayOrderUtility), nameof(PlayerPawnsDisplayOrderUtility.Sort))]
 internal class PlayerPawnsDisplayOrderUtility_Sort_Patch
 {
     [HarmonyPrefix]

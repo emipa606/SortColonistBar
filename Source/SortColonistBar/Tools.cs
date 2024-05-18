@@ -39,33 +39,7 @@ public static class Tools
     private const int _oneDigitSignificant = 1000;
     private const int maxSkillLevel = 20;
 
-    public static readonly FloatMenuWithOptions LabelMenu =
-        new FloatMenuWithOptions([
-            MakeMenuItemForLabel(SortChoice.Manual),
-            MakeMenuItemForLabel(SortChoice.Name),
-            MakeMenuItemForLabel(SortChoice.Reverse),
-            MakeMenuItemForLabel(SortChoice.Age),
-            MakeMenuItemForLabel(SortChoice.Ranged),
-            MakeMenuItemForLabel(SortChoice.Melee),
-            MakeMenuItemForLabel(SortChoice.Construction),
-            MakeMenuItemForLabel(SortChoice.Mining),
-            MakeMenuItemForLabel(SortChoice.Cooking),
-            MakeMenuItemForLabel(SortChoice.Plants),
-            MakeMenuItemForLabel(SortChoice.Animals),
-            MakeMenuItemForLabel(SortChoice.Crafting),
-            MakeMenuItemForLabel(SortChoice.Art),
-            MakeMenuItemForLabel(SortChoice.Medicine),
-            MakeMenuItemForLabel(SortChoice.Social),
-            MakeMenuItemForLabel(SortChoice.Intellectual),
-            MakeMenuItemForLabel(SortChoice.Value),
-            MakeMenuItemForLabel(SortChoice.Health),
-            MakeMenuItemForLabel(SortChoice.Speed),
-            MakeMenuItemForLabel(SortChoice.Food),
-            MakeMenuItemForLabel(SortChoice.Sleep),
-            MakeMenuItemForLabel(SortChoice.Recreation),
-            MakeMenuItemForLabel(SortChoice.Mood),
-            MakeMenuItemForLabel(SortChoice.Time)
-        ]);
+    public static FloatMenuWithOptions LabelMenu;
 
     private static SortChoice _sort = SortChoice.Manual;
 
@@ -82,7 +56,7 @@ public static class Tools
         set
         {
 #if DEBUG
-            Log.Message($"Sort: {value}");
+            Log.Message($"Sort: from {_sort} to {value}");
 #endif
             Find.ColonistBar.MarkColonistsDirty();
             if (_sort != value)
@@ -98,6 +72,12 @@ public static class Tools
                     Reverse = !Reverse;
                     return;
                 case SortChoice.Manual:
+                    foreach (var colonistBarEntry in Find.ColonistBar.Entries)
+                    {
+                        colonistBarEntry.pawn.playerSettings.displayOrder =
+                            DisplayOrderGetter.Invoke(colonistBarEntry.pawn);
+                    }
+
                     DisplayOrderGetter = _defaultDisplayOrderGetter;
                     ThingIDNumberGetter = _defaultThingIDNumberGetter;
                     break;
@@ -306,6 +286,12 @@ public static class Tools
                     NextThingIDNumberGetter = pawn =>
                         (int)pawn.records.GetValue(RecordDefOf.TimeAsColonistOrColonyAnimal);
                     break;
+                case SortChoice.Health:
+                    DisplayOrderGetter = pawn =>
+                        -(int)(pawn.health.summaryHealth.SummaryHealthPercent * 100);
+                    NextThingIDNumberGetter = pawn =>
+                        (int)(pawn.health.summaryHealth.SummaryHealthPercent * 100);
+                    break;
                 default:
                     Log.Warning("Unimplemented sort option");
                     _sort = SortChoice.Manual;
@@ -324,6 +310,36 @@ public static class Tools
     public static Func<Pawn, int> ThingIDNumberGetter { get; private set; } = _defaultThingIDNumberGetter;
     public static Func<Pawn, int> NextThingIDNumberGetter { get; private set; } = _defaultThingIDNumberGetter;
 
+    public static void RefreshMenu()
+    {
+        LabelMenu = new FloatMenuWithOptions([
+            MakeMenuItemForLabel(SortChoice.Manual),
+            MakeMenuItemForLabel(SortChoice.Name),
+            MakeMenuItemForLabel(SortChoice.Reverse),
+            MakeMenuItemForLabel(SortChoice.Age),
+            MakeMenuItemForLabel(SortChoice.Ranged),
+            MakeMenuItemForLabel(SortChoice.Melee),
+            MakeMenuItemForLabel(SortChoice.Construction),
+            MakeMenuItemForLabel(SortChoice.Mining),
+            MakeMenuItemForLabel(SortChoice.Cooking),
+            MakeMenuItemForLabel(SortChoice.Plants),
+            MakeMenuItemForLabel(SortChoice.Animals),
+            MakeMenuItemForLabel(SortChoice.Crafting),
+            MakeMenuItemForLabel(SortChoice.Art),
+            MakeMenuItemForLabel(SortChoice.Medicine),
+            MakeMenuItemForLabel(SortChoice.Social),
+            MakeMenuItemForLabel(SortChoice.Intellectual),
+            MakeMenuItemForLabel(SortChoice.Value),
+            MakeMenuItemForLabel(SortChoice.Health),
+            MakeMenuItemForLabel(SortChoice.Speed),
+            MakeMenuItemForLabel(SortChoice.Food),
+            MakeMenuItemForLabel(SortChoice.Sleep),
+            MakeMenuItemForLabel(SortChoice.Recreation),
+            MakeMenuItemForLabel(SortChoice.Mood),
+            MakeMenuItemForLabel(SortChoice.Time)
+        ]);
+    }
+
     public static void CloseLabelMenu(bool sound = false)
     {
         if (LabelMenu != null)
@@ -334,6 +350,12 @@ public static class Tools
 
     public static FloatMenuOption MakeMenuItemForLabel(SortChoice choice)
     {
-        return new FloatMenuOptionNoClose(choice.ToString(), () => Sort = choice);
+        var choiceName = choice.ToString();
+        if (Reverse && choice == SortChoice.Reverse || Sort == choice)
+        {
+            choiceName = $"* {choiceName}";
+        }
+
+        return new FloatMenuOptionNoClose(choiceName, () => Sort = choice);
     }
 }

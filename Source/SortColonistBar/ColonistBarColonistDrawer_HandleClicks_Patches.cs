@@ -5,8 +5,7 @@ using Verse;
 
 namespace SortColonistBar.Patches;
 
-[HarmonyPatch(typeof(ColonistBarColonistDrawer))]
-[HarmonyPatch("HandleClicks")]
+[HarmonyPatch(typeof(ColonistBarColonistDrawer), nameof(ColonistBarColonistDrawer.HandleClicks))]
 internal class ColonistBarColonistDrawer_HandleClicks_Patches
 {
     private static bool mousePressed;
@@ -47,6 +46,7 @@ internal class ColonistBarColonistDrawer_HandleClicks_Patches
                 return true;
             }
 
+            Tools.RefreshMenu();
             Find.WindowStack.Add(Tools.LabelMenu);
             return false;
         }
