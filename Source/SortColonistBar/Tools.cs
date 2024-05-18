@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using RimWorld;
 using SortColonistBar.FloatMenus;
 using Verse;
@@ -10,8 +11,9 @@ public static class Tools
     public enum SortChoice
     {
         Manual,
-        Name,
+        ManualKeepCurrent,
         Reverse,
+        Name,
         Age,
         Ranged,
         Melee,
@@ -72,15 +74,21 @@ public static class Tools
                     Reverse = !Reverse;
                     return;
                 case SortChoice.Manual:
+                    DisplayOrderGetter = _defaultDisplayOrderGetter;
+                    ThingIDNumberGetter = _defaultThingIDNumberGetter;
+                    break;
+                case SortChoice.ManualKeepCurrent:
                     foreach (var colonistBarEntry in Find.ColonistBar.Entries)
                     {
                         colonistBarEntry.pawn.playerSettings.displayOrder =
                             DisplayOrderGetter.Invoke(colonistBarEntry.pawn);
                     }
 
+                    Reverse = false;
                     DisplayOrderGetter = _defaultDisplayOrderGetter;
                     ThingIDNumberGetter = _defaultThingIDNumberGetter;
-                    break;
+                    _sort = SortChoice.Manual;
+                    return;
                 case SortChoice.Age:
                     DisplayOrderGetter = pawn =>
                         -pawn.ageTracker.AgeBiologicalYears;
@@ -314,8 +322,9 @@ public static class Tools
     {
         LabelMenu = new FloatMenuWithOptions([
             MakeMenuItemForLabel(SortChoice.Manual),
-            MakeMenuItemForLabel(SortChoice.Name),
+            MakeMenuItemForLabel(SortChoice.ManualKeepCurrent),
             MakeMenuItemForLabel(SortChoice.Reverse),
+            MakeMenuItemForLabel(SortChoice.Name),
             MakeMenuItemForLabel(SortChoice.Age),
             MakeMenuItemForLabel(SortChoice.Ranged),
             MakeMenuItemForLabel(SortChoice.Melee),
@@ -348,9 +357,14 @@ public static class Tools
         }
     }
 
+    public static string SplitCamelCase(string input)
+    {
+        return Regex.Replace(input, "([A-Z])", " $1", RegexOptions.Compiled).Trim();
+    }
+
     public static FloatMenuOption MakeMenuItemForLabel(SortChoice choice)
     {
-        var choiceName = choice.ToString();
+        var choiceName = SplitCamelCase(choice.ToString());
         if (Reverse && choice == SortChoice.Reverse || Sort == choice)
         {
             choiceName = $"* {choiceName}";

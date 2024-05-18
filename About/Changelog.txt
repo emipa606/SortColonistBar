@@ -1,5 +1,8 @@
 # Changelog for SortColonistBar
 
+1.5.3 - Added separate manual sorting for keeping current order instead
+
+
 1.5.2 - Switching to manual keeps the current sorting, added missing health sorting logic
 
 
