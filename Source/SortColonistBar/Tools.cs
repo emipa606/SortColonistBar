@@ -15,6 +15,7 @@ public static class Tools
         Reverse,
         Name,
         Age,
+        Gender,
         Ranged,
         Melee,
         Construction,
@@ -94,6 +95,12 @@ public static class Tools
                         -pawn.ageTracker.AgeBiologicalYears;
                     NextThingIDNumberGetter = pawn =>
                         pawn.ageTracker.AgeBiologicalYears;
+                    break;
+                case SortChoice.Gender:
+                    DisplayOrderGetter = pawn =>
+                        -(int)pawn.gender;
+                    NextThingIDNumberGetter = pawn =>
+                        (int)pawn.gender;
                     break;
                 case SortChoice.Speed:
                     DisplayOrderGetter = pawn => -(int)(pawn.GetStatValue(StatDefOf.MoveSpeed) * _oneDigitSignificant);
@@ -326,6 +333,7 @@ public static class Tools
             MakeMenuItemForLabel(SortChoice.Reverse),
             MakeMenuItemForLabel(SortChoice.Name),
             MakeMenuItemForLabel(SortChoice.Age),
+            MakeMenuItemForLabel(SortChoice.Gender),
             MakeMenuItemForLabel(SortChoice.Ranged),
             MakeMenuItemForLabel(SortChoice.Melee),
             MakeMenuItemForLabel(SortChoice.Construction),
