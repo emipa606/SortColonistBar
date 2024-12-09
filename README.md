@@ -7,7 +7,7 @@ Update of Azelions mod https://steamcommunity.com/sharedfiles/filedetails/?id=18
 - Added a Reverse-option as it seemed useful
 - Added sort by Age, Food, Sleep, Recreation and Mood
 
-![Image](https://i.imgur.com/pufA0kM.png)
+![Image](https://i.imgur.com/CN9Rs5X.png)
 	
 ![Image](https://i.imgur.com/Z4GOv8H.png)
 
@@ -58,6 +58,6 @@ Giant space hamster and his Moody mod for inspiration of options
 -  If you have the solution for a problem, please post it to the GitHub repository.
 -  Use [RimSort](https://github.com/RimSort/RimSort/releases/latest) to sort your mods
 
-
+ 
 
 [![Image](https://img.shields.io/github/v/release/emipa606/SortColonistBar?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/2998044601)
